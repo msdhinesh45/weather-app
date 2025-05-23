@@ -1,7 +1,12 @@
 "use client"
 import { useState } from "react";
 
+function getCurrentDate(){
+  
+}
+
 export default function Home() {
+  const date = getCurrentDate();
   const [weatherData,setWeatherData] = useState(null);
   const [city,setCity] = useState("Mumbai")
   return (

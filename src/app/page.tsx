@@ -54,7 +54,7 @@ export default function Home() {
               <div className={styles.weatherIcon}>
                 {weatherData?.weather[0]?.description==="rain" ||
                 weatherData?.weather[0]?.description==="fog" ?(
-                  <i className={`wi wi-day-day-${weatherData?.weather[0]?.description}`}
+                  <i className={`wi wi-day-${weatherData?.weather[0]?.description}`}
                   
                   ></i>):(
                   <i className="wi wi-day-cloudy"></i>

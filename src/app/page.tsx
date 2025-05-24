@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import { useEffect, useState } from "react";
-import styles from "./page.module.css"
+import styles from "./page.module.css";
+
 export default function Home() {
   const [weatherData, setWeatherData] = useState<any>(null);
   const [city, setCity] = useState("Mumbai");
@@ -29,13 +31,6 @@ export default function Home() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (city.trim()) {
-      fetchData(city);
-    }
-  };
-
   useEffect(() => {
     fetchData("Mumbai");
   }, []);
@@ -52,23 +47,26 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <article className={styles.widget}>
-        {/* <h1>{weatherData.name}</h1> */}
-        {weatherData && weatherData.weather && weatherData.weather[0]?(
+        {weatherData && weatherData.weather && weatherData.weather[0] ? (
           <>
-          <div className={styles.icon_and_weatherInfo}>
-            <div className={styles.weatherIcon}>
-              <i className="wi wi-day-cloudy"></i>
+            <div className={styles.icon_and_weatherInfo}>
+              <div className={styles.weatherIcon}>
+                <i className="wi wi-day-cloudy"></i>
               </div>
+               <div className={styles.weatherInfo}>
+                <div>
+                  <span>{weatherData.main?.temp}°C</span>
+                  <div>
+                    {weatherData.weather[0]?.description.toUpperCase()}
+                  </div>
+                </div>
+              </div>
+             
             </div>
+          </>
 
-            <div>
-          
-            </div>
-              </>
-        ):(
-          <div className={styles.place}>
-            Loading...
-          </div>
+        ) : (
+          <div className={styles.place}>Loading...</div>
         )}
       </article>
     </main>

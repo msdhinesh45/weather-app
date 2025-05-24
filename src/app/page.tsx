@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useState } from "react";
-
+import styles from "./page.module.css"
 export default function Home() {
   const [weatherData, setWeatherData] = useState<any>(null);
   const [city, setCity] = useState("Mumbai");
@@ -50,8 +50,8 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Weather App</h1>
-    </div>
+    <main className={styles.main}>
+      <article className={styles.widget}></article>
+    </main>
   );
 }

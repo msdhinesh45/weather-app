@@ -51,7 +51,26 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <article className={styles.widget}></article>
+      <article className={styles.widget}>
+        {/* <h1>{weatherData.name}</h1> */}
+        {weatherData && weatherData.weather && weatherData.weather[0]?(
+          <>
+          <div className={styles.icon_and_weatherInfo}>
+            <div className={styles.weatherIcon}>
+              <i className="wi wi-day-cloudy"></i>
+              </div>
+            </div>
+
+            <div>
+          
+            </div>
+              </>
+        ):(
+          <div className={styles.place}>
+            Loading...
+          </div>
+        )}
+      </article>
     </main>
   );
 }

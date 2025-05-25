@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const date = getCurrentDate();
+  const [date, setDate] = useState(getCurrentDate());
   const [weatherData, setWeatherData] = useState<any>(null);
-  const [city, setCity] = useState("Mumbai");
+  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function fetchData(cityName: string) {
+    if (!cityName.trim()) return;
+    
     setLoading(true);
     setError("");
     try {
@@ -24,6 +26,7 @@ export default function Home() {
         setWeatherData(null);
       } else {
         setWeatherData(data);
+        setDate(getCurrentDate());
       }
     } catch (error) {
       setError("Failed to fetch weather data");
@@ -33,12 +36,53 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-      });
+  async function fetchWeatherByCoords(lat: number, lon: number) {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+      const data = await response.json();
+
+      if (data.error || !data.weather) {
+        setError("Could not fetch weather for your location");
+      } else {
+        setWeatherData(data);
+        setCity(data.name);
+        setDate(getCurrentDate());
+      }
+    } catch (error) {
+      setError("Failed to fetch location weather");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
+    // Update date every minute
+    const timer = setInterval(() => {
+      setDate(getCurrentDate());
+    }, 60000);
+
+    // Get user's location weather
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchWeatherByCoords(latitude, longitude);
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          // Fallback to default city if geolocation fails
+          fetchData("Mumbai");
+        }
+      );
+    } else {
+      // Geolocation not available
+      fetchData("Mumbai");
+    }
+
+    return () => clearInterval(timer);
   }, []);
 
   function getCurrentDate() {
@@ -50,15 +94,47 @@ export default function Home() {
     });
   }
 
-  function getWeatherIcon(description: string) {
+  function getWeatherIcon(description: string, hour = new Date().getHours()) {
     const desc = description.toLowerCase();
-    if (desc.includes("rain")) return "wi wi-day-rain";
-    if (desc.includes("fog")) return "wi wi-day-fog";
-    if (desc.includes("cloud")) return "wi wi-day-cloudy";
-    if (desc.includes("clear")) return "wi wi-day-sunny";
-    if (desc.includes("snow")) return "wi wi-day-snow";
-    return "wi wi-day-cloudy";
-    console.log(description)
+    const isDayTime = hour >= 6 && hour < 18;
+
+    // Clear conditions
+    if (desc.includes("clear")) {
+      return isDayTime ? "wi wi-day-sunny" : "wi wi-night-clear";
+    }
+
+    // Rain conditions
+    if (desc.includes("rain") || desc.includes("drizzle")) {
+      if (desc.includes("light")) return isDayTime ? "wi wi-day-rain-mix" : "wi wi-night-alt-rain-mix";
+      if (desc.includes("heavy")) return "wi wi-rain";
+      return isDayTime ? "wi wi-day-rain" : "wi wi-night-alt-rain";
+    }
+
+    // Thunderstorm
+    if (desc.includes("thunderstorm")) return "wi wi-thunderstorm";
+
+    // Snow
+    if (desc.includes("snow")) return "wi wi-snow";
+
+    // Fog/mist/haze
+    if (desc.includes("fog") || desc.includes("mist") || desc.includes("haze")) {
+      return isDayTime ? "wi wi-day-fog" : "wi wi-night-fog";
+    }
+
+    // Cloudy conditions
+    if (desc.includes("cloud")) {
+      if (desc.includes("few") || desc.includes("scattered")) {
+        return isDayTime ? "wi wi-day-cloudy-high" : "wi wi-night-alt-cloudy-high";
+      }
+      return isDayTime ? "wi wi-day-cloudy" : "wi wi-night-alt-cloudy";
+    }
+
+    // Extreme weather
+    if (desc.includes("tornado")) return "wi wi-tornado";
+    if (desc.includes("sand") || desc.includes("dust")) return "wi wi-dust";
+
+    // Default icon
+    return isDayTime ? "wi wi-day-cloudy" : "wi wi-night-alt-cloudy";
   }
 
   return (
@@ -78,9 +154,18 @@ export default function Home() {
             id="cityName"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            disabled={loading}
           />
-          <button className={styles.search_button} type="submit">
-            Search
+          <button 
+            className={styles.search_button} 
+            type="submit"
+            disabled={loading || !city.trim()}
+          >
+            {loading ? (
+              <i className="fas fa-spinner fa-spin"></i>
+            ) : (
+              "Search"
+            )}
           </button>
         </form>
 
@@ -93,12 +178,25 @@ export default function Home() {
             </div>
             <div className={styles.weatherInfo}>
               <div className={styles.temperature}>
-                <span>{weatherData.main?.temp}°C</span>
+                <span>{Math.round(weatherData.main?.temp)}°C</span>
                 <div className={styles.weatherCondition}>
                   {weatherData.weather[0].description.toUpperCase()}
                 </div>
-                <div className={styles.place}>{weatherData.name}</div>
+                <div className={styles.place}>
+                  {weatherData.name}, {weatherData.sys?.country}
+                </div>
                 <div className={styles.date}>{date}</div>
+              </div>
+              <div className={styles.additionalInfo}>
+                <div>
+                  <i className="wi wi-humidity"></i> {weatherData.main?.humidity}%
+                </div>
+                <div>
+                  <i className="wi wi-strong-wind"></i> {weatherData.wind?.speed} km/h
+                </div>
+                <div>
+                  <i className="wi wi-barometer"></i> {weatherData.main?.pressure} hPa
+                </div>
               </div>
             </div>
           </div>
@@ -110,6 +208,7 @@ export default function Home() {
                 src="https://cdn.dribbble.com/users/760347/screenshots/7341673/media/b5af68cdf397db3063f89e5b466aab11.gif"
                 alt="weather waiting"
               />
+              <div className={styles.loadingText}>Loading weather data...</div>
             </div>
           )
         )}

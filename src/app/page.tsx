@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
+
 export default function Home() {
   const date = getCurrentDate();
   const [weatherData, setWeatherData] = useState<any>(null);
@@ -48,6 +49,8 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <article className={styles.widget}>
+
+        
         {weatherData && weatherData.weather && weatherData.weather[0] ? (
           <>
             <div className={styles.icon_and_weatherInfo}>
@@ -62,13 +65,13 @@ export default function Home() {
                 
               </div>
                <div className={styles.weatherInfo}>
-                <div>
+                <div className={styles.temperature}>
                   <span>{weatherData.main?.temp}°C</span>
-                  <div>
+                  <div className={styles.weatherCondition}>
                     {weatherData.weather[0]?.description.toUpperCase()}
                   </div>
                   <div className={styles.place}>{weatherData?.name}</div>
-                  {/* <div className={styles.date}>{date}</div> */}
+                  <div className={styles.date}>{date}</div>
                 </div>
               </div>
              

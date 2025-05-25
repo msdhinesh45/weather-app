@@ -34,7 +34,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    fetchData("Mumbai");
+    // fetchData("Mumbai");
   }, []);
 
   function getCurrentDate() {
@@ -50,6 +50,15 @@ export default function Home() {
     <main className={styles.main}>
       <article className={styles.widget}>
 
+      <form className={styles.weatherLocation}>
+        <input type="text" 
+        className={styles.input_field}
+        placeholder="Enter a City name"
+        id="cityName"
+        onChange={(e)=>setCity(e.target.value)}
+        
+        />
+      </form>
 
         {weatherData && weatherData.weather && weatherData.weather[0] ? (
           <>

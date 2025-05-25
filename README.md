@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weather App 🌤️
 
-## Getting Started
+A beautiful and responsive weather application that displays real-time weather information using dynamic icons and smart location detection.
 
-First, run the development server:
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Click_Here-green)](https://your-live-link-here.com)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 📍 Auto-detects your location to show weather
+- 🔍 Search for weather in any city
+- 🌦️ Displays accurate weather icons and temperature
+- 📱 Fully responsive – mobile & desktop friendly
+- ⚡ Fast performance with a clean UI
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🚀 How to Use
 
-To learn more about Next.js, take a look at the following resources:
+1. Visit the [Live Demo](https://your-live-link-here.com)
+2. Allow location access for automatic weather info
+3. Or manually enter a city name
+4. View current temperature, conditions, and icon animation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💻 Technologies Used
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [OpenWeatherMap API](https://openweathermap.org/)
+- Weather Icons
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🙋‍♂️ Made by
+
+**Dhinesh Kumar**
+
+- 💼 GitHub: [msdhinesh45](https://github.com/msdhinesh45)
+- 💼 LinkedIn: [dhineshkumar45](https://linkedin.com/in/dhineshkumar45)
+
+---
+
+Made with ❤️ by Dhinesh Kumar M

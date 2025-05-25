@@ -50,7 +50,7 @@ export default function Home() {
     <main className={styles.main}>
       <article className={styles.widget}>
 
-        
+
         {weatherData && weatherData.weather && weatherData.weather[0] ? (
           <>
             <div className={styles.icon_and_weatherInfo}>
@@ -79,7 +79,7 @@ export default function Home() {
           </>
 
         ) : (
-          <div className={styles.place}>Loading...</div>
+          <div className={styles.place}><img className={styles.img} src="https://cdn.dribbble.com/users/760347/screenshots/7341673/media/b5af68cdf397db3063f89e5b466aab11.gif"/></div>
         )}
       </article>
     </main>

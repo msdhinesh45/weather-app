@@ -108,3 +108,12 @@
 .weatherLocation button {
   background: linear-gradient(to right, rgb(56, 189, 248), rgb(103, 232, 249));
 }
+
+.img{
+    position: absolute;
+    top: 30px;
+    right: 0px;
+     height: 500px;
+    width: 500px;
+    border-radius: 20px;
+}

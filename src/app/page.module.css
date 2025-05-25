@@ -4,7 +4,7 @@
 .main {
   display: flex;
   justify-content: center;
-  align-items:start;
+  align-items: start;
   padding: 6rem 1rem;
   min-height: 100vh;
   background: conic-gradient(at center top, rgb(17, 24, 39), rgb(243, 244, 246), rgb(17, 24, 39));
@@ -111,4 +111,95 @@
   text-align: center;
   margin-top: 1rem;
   font-weight: bold;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+  .main {
+    padding: 4rem 1rem;
+  }
+  
+  .widget {
+    padding: 1.5rem;
+  }
+  
+  .weatherIcon {
+    font-size: 80px;
+  }
+  
+  .temperature {
+    font-size: 40px;
+  }
+  
+  .place {
+    font-size: 24px;
+  }
+  
+  .date {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main {
+    padding: 2rem 0.5rem;
+  }
+  
+  .widget {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+  
+  .weatherLocation {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input_field {
+    min-width: 80%;
+    font-size: 16px;
+  }
+  
+  .search_button {
+    width: 80%;
+    padding: 0.5rem;
+  }
+  
+  .weatherIcon {
+    font-size: 70px;
+  }
+  
+  .temperature {
+    font-size: 36px;
+  }
+  
+  .place {
+    font-size: 20px;
+  }
+  
+  .weatherCondition {
+    font-size: 18px;
+  }
+  
+  .date {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .weatherIcon {
+    font-size: 60px;
+  }
+  
+  .temperature {
+    font-size: 32px;
+  }
+  
+  .place {
+    font-size: 18px;
+  }
+  
+  .weatherCondition, .date {
+    font-size: 16px;
+  }
 }
